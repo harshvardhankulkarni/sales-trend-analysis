@@ -1,6 +1,8 @@
-# Sales Trend Analysis
+# Sales Trend Analysis - Demo Project
 
 Analyze 180 days of daily sales data. Identify trends, seasonal patterns, and day-of-week performance. Use the insights to optimize marketing spend and staffing.
+
+This is a demo project using synthetic data to demonstrate time series analysis techniques.
 
 ## Problem
 
