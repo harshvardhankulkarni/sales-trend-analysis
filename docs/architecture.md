@@ -1,84 +1,67 @@
-# Architecture: Sales Trend Analysis
+<!-- GSD -->
 
-## Context
+# Sales Trend Analysis — Architecture
 
-Businesses collect daily sales data but rarely use it to make decisions. Trend analysis reveals whether revenue is growing, which days perform best, and where marketing spend should go.
+## Context and Goals
 
-## Goals
+This project analyzes 180 days of synthetic daily sales data to uncover trends, seasonal patterns, and day-of-week performance. It is a portfolio demo that demonstrates time series analysis techniques using Python.
 
-- Identify revenue trends over a 180-day period.
-- Detect day-of-week performance patterns.
-- Calculate rolling averages for noise reduction.
-- Produce actionable recommendations.
-
-## Design
-
-### Data Flow
+## Data Flow
 
 ```
-Synthetic Data Generator
-  - Base trend (linear growth)
-  - Weekly seasonality (sine wave)
-  - Day-of-week effect (multipliers)
-  - Random noise (normal distribution)
-        |
-        v
-Daily Sales DataFrame (180 rows)
-        |
-        +---> 7-day rolling average
-        +---> 30-day rolling average
-        +---> Month-over-month comparison
-        +---> Day-of-week aggregation
-        |
-        v
-Visualization (3-panel chart) + CSV Export
+Synthetic Data Generation
+  → Daily sales with trend + seasonality + noise
+  → 7-day and 30-day rolling averages
+  → Month-over-month comparison
+  → Day-of-week performance breakdown
+  → Static matplotlib visualization (3-panel)
+  → Interactive Plotly HTML visualization
+  → CSV export
 ```
 
-### Key Formulas
+## Components
 
-```python
-# Synthetic sales generation
-sales = (base_sales + trend) * weekly_seasonality * day_of_week_factor + noise
+| File | Role |
+|------|------|
+| `2_sales_trend_analysis.py` | Main analysis script: data generation, rolling averages, MoM, DoW, static chart, CSV export |
+| `generate_interactive.py` | Generates interactive Plotly HTML version of the analysis |
+| `2_sales_trend_analysis.ipynb` | Jupyter notebook version for exploratory development |
+| `2_sales_trend_interactive.html` | Generated interactive Plotly chart |
+| `2_sales_trend_analysis.png` | Generated static 3-panel visualization |
+| `sales_trend_output.csv` | Generated output with daily sales + rolling averages |
 
-# Rolling averages
-df['7_day_avg'] = df['sales'].rolling(window=7).mean()
-df['30_day_avg'] = df['sales'].rolling(window=30).mean()
-
-# Month-over-month change
-monthly['mom_change_pct'] = monthly['total_sales'].pctchange() * 100
-```
-
-### Visualization Layout
-
-```
-Panel 1: Daily sales line chart with 7-day and 30-day overlays
-Panel 2: Monthly bar chart
-Panel 3: Day-of-week bar chart
-```
-
-## Key Decisions
+## Design Decisions
 
 | Decision | Rationale |
 |----------|-----------|
-| 180-day window | Long enough for trend detection. Short enough for quick runs. |
-| 7-day and 30-day averages | Industry standard. 7-day removes weekly noise. 30-day shows direction. |
-| Synthetic data | No external files needed. Fully reproducible. |
-| Day-of-week multipliers | Matches real-world patterns (weekends higher). |
+| 180-day window | Provides enough data for meaningful trend and seasonality analysis without overwhelming complexity |
+| Synthetic data | Demonstrates the analysis pipeline without requiring real sales data access |
+| 7-day and 30-day rolling averages | Short window captures weekly trends; long window smooths noise for overall direction |
+| Day-of-week breakdown | Reveals weekly seasonality patterns common in retail sales |
+| Static + interactive charts | Static for quick reference, interactive for exploration |
 
 ## Trade-offs
 
-- **Synthetic vs real data**: Real data would require CSV import, date parsing, and missing value handling. The trade-off is convenience vs realism.
-- **Linear trend assumption**: Real trends are rarely linear. Polynomial or exponential fits could be more accurate but need more data.
-- **Static analysis**: No forecasting. Extending to predict future sales would require ARIMA or Prophet.
+- Synthetic data means patterns are known and clean — real data would include anomalies, missing values, and irregular seasonality
+- Rolling averages lag behind real trends — they detect changes after they happen
+- 180 days may miss longer-term seasonal cycles (quarterly or annual)
+- Simple additive model for data generation oversimplifies real-world sales dynamics
 
-## Integration Points
+## File Organization
 
-- **Input**: Self-generates data. Replace with `pd.read_csv('real_sales.csv')` for real data.
-- **Output**: `sales_trend_output.csv` can feed into BI tools (Power BI, Tableau) or reporting systems.
-
-## Dependencies
-
-- Python 3.8+
-- pandas, numpy, matplotlib
-
-No external APIs or databases.
+```
+sales-trend-analysis/
+├── 2_sales_trend_analysis.py     # Main analysis
+├── generate_interactive.py        # Interactive HTML chart generator
+├── 2_sales_trend_analysis.ipynb   # Jupyter notebook
+├── 2_sales_trend_analysis.png     # Static chart output
+├── 2_sales_trend_interactive.html # Interactive chart output
+├── sales_trend_output.csv         # Data export
+├── index.html                    # GitHub Pages site
+└── docs/
+    ├── ARCHITECTURE.md           # This file
+    ├── GETTING-STARTED.md
+    ├── DEVELOPMENT.md
+    ├── TESTING.md
+    └── CONFIGURATION.md
+```

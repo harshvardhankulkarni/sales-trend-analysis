@@ -1,99 +1,65 @@
-# Sales Trend Analysis - Demo Project
+<!-- GSD -->
+# Sales Trend Analysis
 
-Analyze 180 days of daily sales data. Identify trends, seasonal patterns, and day-of-week performance.
+Time series analysis of 180 days of synthetic daily sales data. Generates reproducible data, computes rolling averages, identifies day-of-week patterns, and produces actionable revenue insights.
 
-This is a demo project using synthetic data to demonstrate time series analysis techniques.
+**Demo / Portfolio project.** Uses synthetic data to demonstrate time series analysis techniques.
+
+## Features
+
+- Generates 180 days of synthetic daily sales with trend, seasonality, and realistic noise
+- 7-day and 30-day rolling average calculations
+- Month-over-month revenue comparison with percentage change
+- Day-of-week performance breakdown
+- Static 3-panel visualization (PNG)
+- Interactive Plotly HTML chart with hover, zoom, and pan
+- CSV export for downstream use
 
 ## Tech Stack
 
-- Python 3.8+
-- Pandas 2.0+ - Data manipulation and rolling calculations
-- NumPy 1.24+ - Numerical operations
-- Matplotlib 3.7+ - Visualization
+| Component | Technology |
+|-----------|-----------|
+| Language | Python 3.8+ |
+| Data processing | Pandas 2.0+, NumPy 1.24+ |
+| Static viz | Matplotlib 3.7+ |
+| Interactive viz | Plotly 5.x |
+| Notebook | Jupyter |
 
 ## Quick Start
-
-### Prerequisites
-
-- Python 3.8 or higher
-- pip package manager
-
-### Installation
 
 ```bash
 git clone https://github.com/harshvardhankulkarni/sales-trend-analysis.git
 cd sales-trend-analysis
-pip install pandas numpy matplotlib
-```
-
-### Running
-
-```bash
+pip install pandas numpy matplotlib plotly
 python 2_sales_trend_analysis.py
 ```
 
-Expected output:
+For the interactive version:
 
+```bash
+python generate_interactive.py
 ```
-Saved: 2_sales_trend_analysis.png
---- SALES TREND ANALYSIS RESULTS ---
-Period: 2024-01-01 to 2024-06-28
-Total revenue: Rs.12,134,670
-Average daily sales: Rs.67,415
-...
-Exported: sales_trend_output.csv
-Done.
-```
-
-### Output Files
-
-| File | Description |
-|------|-------------|
-| 2_sales_trend_analysis.png | 3-panel visualization chart |
-| sales_trend_output.csv | Daily sales data with 7-day and 30-day averages |
-
-## How It Works
-
-The script generates 180 days of synthetic daily sales with four components:
-
-1. **Base trend** - Revenue grows linearly over time (Rs.0 to Rs.20,000 uplift).
-2. **Weekly seasonality** - Cyclical pattern repeating every 7 days.
-3. **Day-of-week effect** - Weekend days get 1.3x to 1.5x boost.
-4. **Random noise** - Realistic day-to-day variation.
-
-Two rolling averages smooth the noise:
-
-- **7-day average** - Captures weekly cycles.
-- **30-day average** - Shows the underlying trend.
-
-### Metrics Calculated
-
-- Total revenue over the period.
-- Average daily revenue.
-- Peak and lowest sales days.
-- Best and worst performing days of the week.
-- Month-over-month change percentage.
 
 ## Project Structure
 
 ```
 sales-trend-analysis/
-  2_sales_trend_analysis.py   Main analysis script
-  README.md                   This file
+  2_sales_trend_analysis.py    Main analysis script
+  generate_interactive.py      Plotly interactive HTML version
+  2_sales_trend_analysis.ipynb Jupyter notebook
+  index.html                   GitHub Pages landing page
+  sales_trend_output.csv       Generated output data
+  2_sales_trend_analysis.png   Static 3-panel chart
+  2_sales_trend_interactive.html Interactive Plotly chart
+  README.md                    This file
   docs/
-    architecture.md            Design and methodology
-    runbook.md                 Operations guide
+    ARCHITECTURE.md            Design and methodology
+    GETTING-STARTED.md         Installation and first run
+    DEVELOPMENT.md             Modification guide
+    TESTING.md                 Validation procedures
+    CONFIGURATION.md           Parameters reference
 ```
 
-## Configuration
+## GitHub Pages
 
-Edit these parameters at the top of the script:
-
-- `np.random.seed(42)` - Change for different data.
-- `base_sales = 50000` - Baseline daily revenue.
-- `trend` range - Controls growth rate.
-- `weekend_boost` array - Adjust day-of-week multipliers.
-
-## License
-
-MIT
+Live demo: https://harshvardhankulkarni.github.io/sales-trend-analysis/
